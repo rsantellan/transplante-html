@@ -18,7 +18,13 @@ class cambiarFechaFinTratamientoForm extends sfForm
     $id = $defaults["id"];
     $trasplante = tratamientoHandler::retriveById($id, Doctrine_Core::HYDRATE_ARRAY );
     $age = mdBasicFunction::calculateAge($trasplante["fecha_inicio"], true);
-    $years = range(date('Y') - $age,date('Y'));
+    $usedFecha = 2000;
+    if((date('Y') - $age) < 2000)
+    {
+        $usedFecha = date('Y') - $age;
+    }
+    $years = range($usedFecha, date('Y') + 1);
+    //$years = range(date('Y') - $age,date('Y'));
     $years = array_combine($years, $years);
     $pacientes = array();
     $this->setWidgets(array(

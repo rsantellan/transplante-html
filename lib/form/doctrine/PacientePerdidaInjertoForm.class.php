@@ -22,7 +22,13 @@ class PacientePerdidaInjertoForm extends BasePacientePerdidaInjertoForm
 
     $age = mdBasicFunction::calculateAge($preTrasplante["fecha_ingreso_lista"], true);
     $fechaData = explode('-', $preTrasplante["fecha_ingreso_lista"]);
-    $years = range((int) $fechaData[0] - $age, date('Y')+ 1);
+    $usedFecha = 2000;
+    if(((int) $fechaData[0] - $age) < 2000)
+    {
+        $usedFecha = (int) $fechaData[0] - $age;
+    }
+    $years = range($usedFecha, date('Y')+ 1);
+    //$years = range((int) $fechaData[0] - $age, date('Y')+ 1);
     $years = array_combine($years, $years);
     
     $this->widgetSchema['fecha_perdida'] = new sfWidgetFormDate(

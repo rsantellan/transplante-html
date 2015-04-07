@@ -29,7 +29,13 @@ $this->widgetSchema['evolucion'] = new sfWidgetFormInputHidden();
 	{
 	  $age = 100;
 	}
-    $years = range(date('Y') - $age,date('Y')+ 1);
+	$usedFecha = 2000;
+	if((date('Y') - $age) < 2000)
+	{
+	    $usedFecha = date('Y') - $age;
+	}
+	$years = range($usedFecha, date('Y')+ 1);
+	//$years = range(date('Y') - $age,date('Y')+ 1);
     $years = array_combine($years, $years);
     
     $this->widgetSchema['fecha'] = new sfWidgetFormDate(

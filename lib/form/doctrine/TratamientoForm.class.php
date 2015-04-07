@@ -18,7 +18,12 @@ class TratamientoForm extends BaseTratamientoForm
     $this->widgetSchema['paciente_id'] = new sfWidgetFormInputHidden();
     $age = mdBasicFunction::calculateAge($paciente["fecha_dialisis"], true);
     $fechaData = explode('-', $paciente["fecha_dialisis"]);
-    $years = range((int) $fechaData[0] - $age, date('Y') + 1);
+    $usedFecha = 2000;
+    if(((int) $fechaData[0] - $age) < 2000)
+    {
+        $usedFecha = (int) $fechaData[0] - $age;
+    }
+    $years = range($usedFecha, date('Y') + 1);
     $years = range(date('Y') - $age,date('Y'));
     $years = array_combine($years, $years);
 

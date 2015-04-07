@@ -6,7 +6,7 @@ foreach($serolesDonante as $serol)
   $serolesAsociados[$serol['serol_valor_id']] = $serol['serol_valor_id'];
 }
 ?>
-<?php var_dump($serolesAsociados); ?>
+<?php //var_dump($serolesAsociados); ?>
 
   <div class="seroles_container_title">
     <label><?php echo __("serol_seroles");?></label>
