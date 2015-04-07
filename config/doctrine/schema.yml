@@ -1,0 +1,1939 @@
+Pacientes:
+  tableName: pacientes
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true    
+    the:
+      type: integer(4)
+      notnull: true
+    ci:
+      type: string(12)
+      notnull: true
+    nombre:
+      type: string(50)
+      notnull: true
+    apellido:
+      type: string(50)
+      notnull: true
+    num_fnr:
+      type: integer(3)
+      notnull: true
+    raza:
+      type: enum
+      length: 15
+      values: ['Blanca','Negra','Asiática','Indio americana']
+      notnull: true
+    sexo:
+      type: enum
+      length: 1
+      values: ['M','F']
+      notnull: true
+    fecha_nacimiento:
+      type: date(25)
+      notnull: true
+    fecha_dialisis:
+      type: date(25)
+    sin_dialisis:
+      type: enum
+      length: 2
+      values: ['NO','SI']
+      notnull: true
+      default: 'NO'
+    nefropatia_id:
+      type: integer(4)
+      notnull: true
+    grupo_sanguineo:
+      type: enum
+      length: 2
+      values: ['A','B','AB','O']
+      notnull: true
+  relations:
+    Nefropatia:
+      local: nefropatia_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+Nefropatia:
+  tableName: nefropatia
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+
+Pacientepretrasplante:
+  tableName: paciente_pre_trasplante
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    paciente_id:
+      type: integer(4)
+      notnull: true
+    the:
+      type: integer(4)
+      unique: true
+      notnull: true      
+    fecha_ingreso_lista:
+      type: date(25)
+      notnull: true
+    fecha_egreso:
+      type: date(25)
+    modalidad_d:
+      type: enum
+      length: 11
+      values: ['HD','DPCA','HD+DPCA','TR','HD+TR','DPCA+TR','HD+TR+DPCA','TM']
+      notnull: true
+    diabetes:
+      type: enum
+      length: 8
+      values: ['No','Tipo I','Tipo II']
+      notnull: true
+    imc:
+      type: enum
+      length: 14
+      values: ['<20','entre 20 y 25','>25']
+      notnull: true
+    origen:
+      type: enum
+      length: 4
+      values: ['MSP','IAMC','Otra']
+      notnull: true
+    pbr:
+      type: integer(1)
+      default: 0
+    hta:
+      type: integer(1)
+      default: 0
+    obesidad:
+      type: integer(1)
+      default: 0
+    dislipemia:
+      type: integer(1)
+      default: 0
+    tabaquismo:
+      type: integer(1)
+      default: 0
+    iam:
+      type: integer(1)
+      default: 0
+    ave:
+      type: integer(1)
+      default: 0
+    revasc_cardio:
+      type: integer(1)
+      default: 0
+    meses_en_lista:
+      type: integer(2)
+      default: 0 
+  relations:
+    Pacientes:
+      local: paciente_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+PacienteMuerte:
+  tableName: paciente_muerte
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    paciente_id:
+      type: integer(4)
+      unique: true
+    causa_muerte_id:
+      type: integer(4)
+      notnull: true
+    fecha_muerte:
+      type: date(25)
+      notnull: true
+    transplante_funcionando:
+      type: integer(1)
+      default: 0
+  relations:
+    Pacientes:
+      local: paciente_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    PacienteCausaMuerte:
+      local: causa_muerte_id
+      foreign: id
+      type: one
+            
+PacienteCausaMuerte:
+  tableName: paciente_causa_muerte
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+
+Donante:
+  tableName: donante
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    identificador:
+      type: string(20)
+      unique: true
+    tipo_donante:
+      type: enum
+      length: 10
+      values: ['Cadavérico','Vivo']
+      notnull: true
+    sexo_donante:
+      type: enum
+      length: 1
+      values: ['M','F']
+      notnull: true
+    edad_donante:
+      type: integer(1)
+    enastab_hemod:
+      type: integer(1)
+    donante_causa_muerte_id:
+      type: integer(4)
+      notnull: true
+    cr_p:
+      type: float()
+      default: 0
+    otros:
+      type: string(255)
+    grupo_sanguineo:
+      type: enum
+      length: 2
+      values: ['A','B','AB','O']
+      notnull: true
+    relacion_filiar:
+      type: enum
+      length: 13
+      values: ['sin relacion','padre/madre','hermano/a','Hijo/a','esposo/a','otro']
+      default: 'sin relacion'
+    peso:
+      type: integer(4)
+    altura:
+      type: float()
+  relations:
+    DonanteCausaMuerte:
+      local: donante_causa_muerte_id
+      foreign: id
+      type: one
+    DonanteOrganos:
+      class: Organos
+      local: donante_id
+      foreign: organo_id
+      refClass: DonanteOrganos
+      foreignAlias: Donantes
+    DonanteAntecedentes:
+      class: AntecedentesDeDonante
+      local: donante_id
+      foreign: antecedente_de_donante_id
+      refClass: DonanteAntecedentes
+      foreignAlias: Donantes      
+            
+AntecedentesDeDonante:
+  tableName: antecedentes_de_donante
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+
+DonanteCausaMuerte:
+  tableName: donante_causa_muerte
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+      
+DonanteOrganos:
+  tableName: donante_organos
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    donante_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    organo_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+  relations:
+    Donante:
+      local: donante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Organos:
+      local: organo_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+            
+Organos:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+      
+DonanteAntecedentes:
+  tableName: donante_antecedentes
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    donante_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    antecedente_de_donante_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+  relations:      
+    Donante:
+      local: donante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    AntecedentesDeDonante:
+      local: antecedente_de_donante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+DonanteSerol:
+  tableName: donante_serol
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    donante_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    serol_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    serol_valor_id:
+      type: integer(4)
+      notnull: true
+  relations:      
+    Donante:
+      local: donante_id
+      foreign: id
+      type: one
+    Serol:
+      local: serol_id
+      foreign: id
+      type: one
+    SerolValor:
+      local: serol_valor_id
+      foreign: id
+      type: one
+                  
+Serol:
+  tableName: serol
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    tipo:
+      type: string(50)
+      notnull: true
+      
+SerolValor:
+  tableName: serol_valor
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    serol_id:
+      type: integer(4)
+      notnull: true
+    valor:
+      type: string(50)
+      notnull: true
+  relations:       
+    Serol:
+      local: serol_id
+      foreign: id
+      type: one
+      onDelete: CASCADE    
+      
+                                    
+Trasplante:
+  actAs: [Timestampable]
+  tableName: trasplante
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    paciente_pre_trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    numero_de_transplantes_realizados:
+      type: integer(4)
+      default: 0
+    donante_id:
+      type: integer(4)
+      notnull: true
+    inestab_hemodial:
+      type: boolean
+      default: 0
+    rinhon:
+      type: enum
+      length: 10
+      values: ['Derecho','Izquierdo']
+      notnull: true      
+    anomalia_vascular:
+      type: boolean
+      default: 0
+    numero_arterias:
+      type: enum
+      length: 1
+      values: ['1','2','3']
+      notnull: true        
+    numero_venas:
+      type: enum
+      length: 1
+      values: ['1','2','3']
+      notnull: true 
+    ureter:
+      type: enum
+      length: 5
+      values: ['Unico','Doble']
+      notnull: true       
+    numero_compatibilidad_ab:
+      type: integer(3)
+    numero_compatibilidad_dr:
+      type: integer(3)
+    numero_incompatibilidad_ab:
+      type: integer(3)
+    numero_incompatibilidad_dr:
+      type: integer(3)
+    autoac:
+      type: boolean
+      default: 0
+    pra_max:
+      type: string(10)
+    pra_tr:
+      type: string(20)
+    trans_previas:
+      type: boolean
+      default: 0
+    numero_transf:
+      type: integer(1)
+      default: 0
+    embarazo:
+      type: enum
+      length: 9
+      values: ['si','no','no aplica']
+      notnull: true
+      default: 'no aplica'
+    numero_embarazo:
+      type: integer(1)
+      default: 0
+    liquido_perfusion:
+      type: enum
+      length: 12
+      values: ['Eurocollins','WC','Custodiol','Otro']
+      notnull: true
+    tq_de_banco:
+      type: boolean
+      default: 0
+    lado_implante:
+      type: enum
+      length: 12
+      values: ['Derecho','Izquierdo']
+      notnull: true
+    anast_venosa:
+      type: enum
+      length: 17
+      values: ['Termino lateral','Termino terminal','otra']
+      notnull: true      
+    anast_arterial:
+      type: enum
+      length: 17
+      values: ['Termino lateral','Termino terminal','otra']
+      notnull: true
+    anast_ureteral:
+      type: enum
+      length: 9
+      values: ['Alferez','Taguchi','Gregoire','Lick','Otra']
+      notnull: true      
+    t_isq_cal_min:
+      type: integer(3)
+      default: 0
+    t_isq_fria_hs:
+      type: integer(3)
+      default: 0
+    t_isq_fria_min:
+      type: integer(3)
+      default: 0
+    t_isq_tibia_hs:
+      type: integer(3)
+      default: 0
+    reperfusion:
+      type: enum
+      length: 7
+      values: ['buena','regular','mala']
+      notnull: true      
+    sangrado_i_op:
+      type: boolean
+      default: 0
+    lesion_arterial:
+      type: boolean
+      default: 0
+    lesion_venosa:
+      type: boolean
+      default: 0
+    necesidad_repefundir:
+      type: boolean
+      default: 0
+    otras_compl_quirur:
+      type: string(250)
+    diuresis_i_op:
+      type: boolean
+      default: 0
+    cr_inicial:
+      type: float()
+      default: 0
+    dia_rec_diuresis:
+      type: integer(2)
+      default: 0
+    dia_rec_funcional:
+      type: integer(2)
+      default: 0
+    dialisis:
+      type: integer(1)
+      default: 0
+    num_de_hd:
+      type: integer(2)
+      default: 0
+    comentario:
+      type: string(255)
+    fecha_alta:
+      type: date(25)
+    edad_receptor:
+      type: integer(2)
+      default: 0      
+  relations:       
+    Pacientepretrasplante:
+      local: paciente_pre_trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE 
+    Donante:
+      local: donante_id
+      foreign: id
+      type: one
+    TrasplanteInducciones:
+      class: Induccion
+      local: trasplante_id
+      foreign: induccion_id
+      refClass: TrasplanteInduccion
+      foreignAlias: Trasplante     
+    TrasplanteInmunosupresores:
+      class: Inmunosupresores
+      local: trasplante_id
+      foreign: inmunosupresores_id
+      refClass: TrasplanteInmunosupresores
+      foreignAlias: Trasplante     
+
+      
+Cmv:
+  tableName: cmv
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    cmv_diagnostico_id:
+      type: integer(4)
+      notnull: true
+    tipo:
+      type: integer(1)
+      notnull: true
+    cmv_droga_id:
+      type: integer(4)
+      notnull: true
+    dias_tratamiento:
+      type: integer(2)
+      default: 0
+      notnull: true
+    efecto_secundario:
+      type: string(255)
+  relations:
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    CmvDiagnostico:
+      local: cmv_diagnostico_id
+      foreign: id
+      type: one
+    CmvDrogas:
+      local: cmv_droga_id
+      foreign: id
+      type: one
+    CmvEmfermedades:
+      class: Cmvemfermedades
+      local: cmv_id
+      foreign: cmv_emfermedades_id
+      refClass: CmvUsoEnfermedades
+      foreignAlias: Cmvs      
+      
+CmvDiagnostico:
+  tableName: cmv_diagnostico
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    nombre:
+      type: string(50)
+      notnull: true
+      
+CmvDrogas:
+  tableName: cmv_drogas
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+      
+
+CmvUsoEnfermedades:
+  tableName: cmv_uso_enfermedades
+  options:
+    symfony:
+      form:   false
+      filter: false
+  columns:
+    cmv_id:
+      type: integer(4)
+      primary: true
+    cmv_emfermedades_id:
+      type: integer(4)
+      primary: true
+  relations:
+    Cmv:
+      local: cmv_id
+      onDelete: CASCADE
+    Cmvemfermedades:
+      local: cmv_emfermedades_id
+      onDelete: CASCADE
+           
+Cmvemfermedades:
+  tableName: cmv_emfermedades
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+
+TrasplanteSerol:
+  tableName: trasplante_serol
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    serol_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    serol_valor_id:
+      type: integer(4)
+      notnull: true
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Serol:
+      local: serol_id
+      foreign: id
+      type: one
+    SerolValor:
+      local: serol_valor_id
+      foreign: id
+      type: one
+#desde aca es nuevo no esta probado en el diagrama
+ComplicacionesTipos:
+  tableName: complicaciones_tipos
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+
+ComplicacionesTiposValores:
+  tableName: complicaciones_tipos_valores
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+    complicacion_tipo_id:
+      type: integer(4)
+      notnull: true
+  relations:      
+    ComplicacionesTipos:
+      local: complicacion_tipo_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+Medicaciones:
+  tableName: medicaciones
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+
+Infeccion:
+  tableName: infeccion
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+      
+Germenes:
+  tableName: germenes
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true  
+
+TrasplanteComplicacionesInfecciosas:
+  tableName: trasplante_complicaciones_infecciosas
+  actAs:
+    trasplanteComplicacionesConsultaBehavior: ~  
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    medicacion_id:
+      type: integer(4)
+      notnull: true
+    infeccion_id:
+      type: integer(4)
+      notnull: true
+    germen_id:
+      type: integer(4)    
+      notnull: true      
+    internado:
+      type: integer(1)
+      notnull: true
+    dias_de_internacion:
+      type: integer(2)
+      default: 0
+    evolucion:
+      type: integer(1)
+      notnull: true
+    comentario:
+      type: string(1000)
+  relations:      
+    Medicaciones:
+      local: medicacion_id
+      foreign: id
+      type: one
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Infeccion:
+      local: infeccion_id
+      foreign: id
+      type: one
+    Germenes:
+      local: germen_id
+      foreign: id
+      type: one  
+      
+TrasplanteComplicacionesNoInfecciosas:
+  tableName: trasplante_complicaciones_no_infecciosas
+  actAs:
+    trasplanteComplicacionesConsultaBehavior: ~  
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    medicacion_id:
+      type: integer(4)
+      notnull: true
+    complicacion_valor_id:
+      type: integer(4)
+      notnull: true      
+    internado:
+      type: integer(1)
+      notnull: true
+    dias_de_internacion:
+      type: integer(2)
+      default: 0
+    evolucion:
+      type: integer(1)
+      notnull: true
+    comentario:
+      type: string(1000)
+  relations:      
+    Medicaciones:
+      local: medicacion_id
+      foreign: id
+      type: one
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    ComplicacionesTiposValores:
+      local: complicacion_valor_id
+      foreign: id
+      type: one 
+
+TrasplanteComplicacionesConsulta:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  tableName: trasplante_complicaciones_consulta
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    complicacion_id:
+      type: integer(4)
+      notnull: true
+    complicacion_class:
+      type: string(50)
+      notnull: true
+    dias_desde_trasplante:
+      type: integer(4)
+      notnull: true    
+    meses_desde_trasplante:
+      type: integer(4)
+      notnull: true 
+    years_desde_trasplante:
+      type: integer(4)
+      notnull: true
+      
+# ----------------
+Induccion:
+  tableName: induccion
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+
+TrasplanteInduccion:
+  tableName: trasplante_induccion
+  options:
+    symfony:
+      form:   false
+      filter: false
+  columns:
+    trasplante_id:
+      type: integer(4)
+      primary: true
+    induccion_id:
+      type: integer(4)
+      primary: true
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Induccion:
+      local: induccion_id
+      foreign: id
+      type: one      
+
+Inmunosupresores:
+  tableName: inmunosupresores
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+      
+TrasplanteInmunosupresores:
+  tableName: trasplante_inmunosupresores
+  options:
+    symfony:
+      form:   false
+      filter: false
+  columns:
+    trasplante_id:
+      type: integer(4)
+      primary: true
+    inmunosupresores_id:
+      type: integer(4)
+      primary: true
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Inmunosupresores:
+      local: inmunosupresores_id
+      foreign: id
+      type: one 
+
+ResultadoPbr:
+  tableName: resultado_pbr
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    grado:
+      type: string(50)
+      notnull: true
+    criterio:
+      type: string(50)
+
+Ratratamiento:
+  tableName: ratratamiento
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+
+EvolucionTrasplanteCmv:
+  tableName: evolucion_trasplante_cmv
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    igg_cmv:
+      type: integer(1)
+      default: 0
+    igm_cmv:
+      type: integer(1)
+      default: 0
+    pcr_cmv:
+      type: integer(1)
+      default: 0
+    ag_pp65:
+      type: integer(1)
+      default: 0
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      
+EvolucionTrasplanteEcg:
+  tableName: evolucion_trasplante_ecg
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    rs_ecg:
+      type: enum
+      length: 8
+      values: ['Ausente','Presente','Falta']
+      notnull: true 
+    hvi_ecg:
+      type: enum
+      length: 8
+      values: ['Ausente','Presente','Falta']
+      notnull: true 
+    onda_q_ecg:
+      type: enum
+      length: 8
+      values: ['Ausente','Presente','Falta']
+      notnull: true 
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+
+EvolucionTrasplanteEcoCardio:
+  tableName: evolucion_trasplante_eco_cardio
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    fevi_normal:
+      type: integer(1)
+      default: 0
+    insuf_hipodiast:
+      type: integer(1)
+      default: 0
+    iao:
+      type: integer(1)
+      default: 0
+    eao:
+      type: integer(1)
+      default: 0
+    im:
+      type: integer(1)
+      default: 0
+    em:
+      type: integer(1)
+      default: 0
+    ip:
+      type: integer(1)
+      default: 0
+    ep:
+      type: integer(1)
+      default: 0
+    it:
+      type: integer(1)
+      default: 0
+    et:
+      type: integer(1)
+      default: 0
+    derrame:
+      type: integer(1)
+      default: 0
+    calcif_valvular:
+      type: integer(1)
+      default: 0
+    hvi:
+      type: integer(1)
+      default: 0
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+
+EvolucionTrasplanteNutricion:
+  tableName: evolucion_trasplante_nutricion
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    talla:
+      type: integer(2)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    peso_deseado:
+      type: integer(1)
+      default: 0
+    estructura_osea:
+      type: enum
+      length: 8
+      values: ['Pequeña','Mediana','Grande']
+      notnull: true    
+    impresion:
+      type: enum
+      length: 11
+      values: ['Adelgazado','Normopeso','Sobrepeso','Obesidad']
+      notnull: true 
+    peso_real:
+      type: integer(1)
+      default: 0
+    p_tricipital:
+      type: integer(4)
+      default: 0
+    p_tricipital_p:
+      type: enum
+      length: 6
+      values: ['<10','10-25','26-50','51-75','76-91','>90']
+      notnull: true 
+    p_subescapular:
+      type: integer(4)
+      default: 0
+    p_subescapular_p:
+      type: enum
+      length: 6
+      values: ['<10','10-25','26-50','51-75','76-91','>90']
+      notnull: true
+    sum_pliegues:
+      type: integer(4)
+      default: 0
+    p_sum_pliegues:
+      type: enum
+      length: 6
+      values: ['<10','10-25','26-50','51-75','76-91','>90']
+      notnull: true
+    cf_brazo:
+      type: integer(2)
+      default: 0
+    p_cf_brazo:
+      type: enum
+      length: 6
+      values: ['<10','10-25','26-50','51-75','76-91','>90']
+      notnull: true
+    cf_musc_brazo:
+      type: integer(2)
+      default: 0
+    p_cf_musc_brazo:
+      type: enum
+      length: 6
+      values: ['<10','10-25','26-50','51-75','76-91','>90']
+      notnull: true
+    area_brazo:
+      type: integer(2)
+      default: 0
+    area_musc_brazo:
+      type: integer(2)
+      default: 0
+    p_area_musc_brazo:
+      type: enum
+      length: 6
+      values: ['<10','10-25','26-50','51-75','76-91','>90']
+      notnull: true
+    area_grasa_brazo:
+      type: integer(2)
+      default: 0
+    p_area_grasa_brazo:
+      type: enum
+      length: 6
+      values: ['<10','10-25','26-50','51-75','76-91','>90']
+      notnull: true
+    r_cintura_cadera:
+      type: integer(2)
+      default: 0
+    diag_nutricional:
+      type: enum
+      length: 13
+      values: ['Desnleve','Desnmoderada','Desnsevera','Normopeso','Sobrepeso','Obesidad']
+      notnull: true      
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one    
+
+Tratamiento:
+  tableName: tratamiento
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    paciente_id:
+      type: integer(4)
+      notnull: true
+    medicacion_id:
+      type: integer(4)
+      notnull: false
+    dosis:
+      type: string(50)
+      default: "-"
+    fecha_inicio:
+      type: date(25)
+      notnull: true
+    fecha_fin:
+      type: date(25)
+  relations:
+    Pacientes:
+      local: paciente_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Pacientes:
+      local: paciente_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Medicaciones:
+      local: medicacion_id
+      foreign: id
+      type: one    
+      
+EvolucionTrasplanteParaclinica:
+  tableName: evolucion_trasplante_para_clinica
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    pas:
+      type: float()
+      default: 0
+    pad:
+      type: float()
+      default: 0
+    diuresis:
+      type: float()
+      default: 0
+    peso:
+      type: float()
+      default: 0
+    urea:
+      type: float()
+      default: 0
+    creatinina:
+      type: float()
+      default: 0
+    ht:
+      type: float()
+      default: 0
+    hb:
+      type: float()
+      default: 0
+    gb:
+      type: float()
+      default: 0
+    plaquetas:
+      type: float()
+      default: 0
+    sodio:
+      type: float()
+      default: 0
+    potasio:
+      type: float()
+      default: 0
+    cloro:
+      type: float()
+      default: 0
+    calcio:
+      type: float()
+      default: 0
+    fosforo:
+      type: float()
+      default: 0
+    glicemia:
+      type: float()
+      default: 0
+    uricemia:
+      type: float()
+      default: 0
+    prot_u:
+      type: float()
+      default: 0
+    ccreatinina:
+      type: float()
+      default: 0
+    curea:
+      type: float()
+      default: 0
+    na_u:
+      type: float()
+      default: 0
+    ku:
+      type: float()
+      default: 0
+    cya_pv:
+      type: float()
+      default: 0
+    cya_pp:
+      type: float()
+      default: 0
+    fk_p:
+      type: float()
+      default: 0
+    mfm_p:
+      type: float()
+      default: 0
+    eve_p:
+      type: float()
+      default: 0
+    bd:
+      type: float()
+      default: 0
+    bi:
+      type: float()
+      default: 0
+    tgo:
+      type: float()
+      default: 0
+    tgp:
+      type: float()
+      default: 0
+    gammagt:
+      type: float()
+      default: 0
+    f_alc:
+      type: float()
+      default: 0
+    t_prot:
+      type: float()
+      default: 0
+    kptt:
+      type: float()
+      default: 0
+    howell:
+      type: float()
+      default: 0
+    fibrinogeno:
+      type: float()
+      default: 0
+    colesterol:
+      type: float()
+      default: 0
+    hdl:
+      type: float()
+      default: 0
+    ldl:
+      type: float()
+      default: 0
+    r_at:
+      type: float()
+      default: 0
+    tg:
+      type: float()
+      default: 0
+    hna1c:
+      type: float()
+      default: 0
+    albumina:
+      type: float()
+      default: 0
+    globulinas:
+      type: float()
+      default: 0
+    pthi:
+      type: enum
+      length: 10
+      values: ['Ausente','Presente','Falta']
+      notnull: true   
+    otros:
+      type: string(255)
+    numpthi:
+      type: float()
+      default: 0
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one 
+
+EvolucionTrasplanteEcodopler:
+  tableName: evolucion_trasplante_ecodopler
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    estructura:
+      type: enum
+      length: 4
+      values: ['Bien','Mal']
+      notnull: true
+    dilatacion:
+      type: integer(1)
+      default: 0
+    colecciones:
+      type: integer(1)
+      default: 0
+    eje_arterial:
+      type: enum
+      length: 4
+      values: ['Bien','Mal']
+      notnull: true
+    eje_venoso:
+      type: enum
+      length: 4
+      values: ['Bien','Mal']
+      notnull: true
+    arteria_renal:
+      type: enum
+      length: 4
+      values: ['Bien','Mal']
+      notnull: true
+    vena_renal:
+      type: enum
+      length: 4
+      values: ['Bien','Mal']
+      notnull: true
+    anast_venosa:
+      type: enum
+      length: 4
+      values: ['Bien','Mal']
+      notnull: true
+    anast_renosa:
+      type: enum
+      length: 4
+      values: ['Bien','Mal']
+      notnull: true
+    indice:
+      type: float()
+      default: 0
+    otros:
+      type: string(255)
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one 
+      
+EvolucionTrasplanteEcografia:
+  tableName: evolucion_trasplante_ecografia
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    diametros:
+      type: string(45)
+    dilatacion:
+      type: integer(1)
+    litiasin:
+      type: integer(1)
+    vejiga:
+      type: string(255)
+      default: ''
+    espesor:
+      type: integer(4)
+    otros:
+      type: string(1000)
+      default: ' '
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one 
+
+EvolucionTrasplanteMarvirales:
+  tableName: evolucion_trasplante_marvirales
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    hsv:
+      type: integer(1)
+    aghbs:
+      type: enum
+      length: 13
+      values: ['Indeterminado','Negativo','Positivo','Sin datos']
+      notnull: true
+    hbsac:
+      type: enum
+      length: 13
+      values: ['Indeterminado','Negativo','Positivo','Sin datos']
+      notnull: true
+    hbcac:
+      type: enum
+      length: 13
+      values: ['Indeterminado','Negativo','Positivo','Sin datos']
+      notnull: true
+    hvc:
+      type: enum
+      length: 13
+      values: ['Indeterminado','Negativo','Positivo','Sin datos']
+      notnull: true
+    hiv:
+      type: enum
+      length: 13
+      values: ['Indeterminado','Negativo','Positivo','Sin datos']
+      notnull: true
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one 
+                
+EvolucionTrasplanteTxtorax:
+  tableName: evolucion_trasplante_txtorax
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~   
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    rct:
+      type: integer(4)
+      default: 0
+    foco:
+      type: integer(1)
+    lateralizado:
+      type: enum
+      length: 9
+      values: ['Izquierda','Derecha','Bilateral']
+      notnull: true
+    derrame_pleural:
+      type: integer(1)
+    lateral_derrame:
+      type: enum
+      length: 9
+      values: ['Izquierda','Derecha','Bilateral']
+      notnull: true
+    secuelas:
+      type: integer(1)
+    otros:
+      type: string(255)
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one 
+
+EvolucionTrasplanteExamenesTipo:
+  tableName: evolucion_trasplante_examenes_tipo
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+
+EvolucionTrasplanteExamenes:
+  tableName: evolucion_trasplante_examenes
+  actAs:
+    EvolucionTrasplanteCounterBehavior: ~  
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    evolucion_trasplante_examenes_tipo_id:
+      type: integer(4)
+      notnull: true
+    tipo:
+      type: enum
+      length: 11
+      values: ['Normal','Patologico']
+      notnull: true
+    comentario:
+      type: string(255)
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+    EvolucionTrasplanteExamenesTipo:
+      local: evolucion_trasplante_examenes_tipo_id
+      foreign: id
+      type: one
+
+EvolucionTrasplanteCounter:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    object_class:
+       type: string(128)
+       notnull: true
+    object_id:
+       type: integer(4)
+       notnull: true      
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one 
+      
+PacienteCausaPerdidaInjerto:
+  tableName: paciente_causa_perdida_injerto
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+      
+PacientePerdidaInjerto:
+  tableName: paciente_perdida_injerto
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    paciente_id:
+      type: integer(4)
+      notnull: true
+    paciente_causa_perdida_injerto_id:
+      type: integer(4)
+      notnull: true
+    fecha_perdida:
+      type: date(25)
+      notnull: true
+    paciente_pre_trasplante_id:
+      type: integer(4)
+      notnull: true     
+  relations:
+    Pacientes:
+      local: paciente_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Pacientepretrasplante:
+      local: paciente_pre_trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    PacienteCausaPerdidaInjerto:
+      local: paciente_causa_perdida_injerto_id
+      foreign: id
+      type: one
+                                                             
+TrasplanteReoperacion:
+  tableName: trasplante_reoperacion
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    descripcion:
+      type: string(64)
+    trasplante_complicacion_infeccion_id:
+      type: integer(4)
+      default: null
+    trasplante_complicacion_no_infeccion_id:
+      type: integer(4)
+      default: null
+    es_infecciosa:
+      type: integer(1)
+      default: 0      
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    TrasplanteComplicacionesInfecciosas:
+      local: trasplante_complicacion_infeccion_id
+      foreign: id
+      type: one    
+      onDelete: CASCADE
+    TrasplanteComplicacionesNoInfecciosas:
+      local: trasplante_complicacion_no_infeccion_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+InjertoEvolucion:
+  tableName: injerto_evolucion
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true    
+    trasplante_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    tm:
+      type: integer(1)
+      default: 0
+    tm_cual:
+      type: string(255)
+    gp_de_novo:
+      type: integer(1)
+      default: 0
+    recidiva_gp_de_novo:
+      type: integer(1)
+      default: 0
+    ra:
+      type: integer(1)
+      default: 0
+    rc:
+      type: integer(1)
+      default: 0
+    ra_tratamiento_id:
+      type: integer(4)
+      notnull: true
+    en_trasplante:
+      type: integer(1)
+      default: 0
+  relations:      
+    Trasplante:
+      local: trasplante_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    Ratratamiento:
+      local: ra_tratamiento_id
+      foreign: id
+      type: one
+    InjertoEvolucionPbrs:
+      class: ResultadoPbr
+      local: injerto_evolucion_id
+      foreign: resultado_pbr_id
+      refClass: InjertoEvolucionPbr
+      foreignAlias: InjertoEvoluciones 
+      
+InjertoEvolucionPbr:
+  tableName: injerto_evolucion_pbr
+  columns:
+    injerto_evolucion_id:
+      type: integer(4)
+      primary: true
+    resultado_pbr_id:
+      type: integer(4)
+      primary: true
+  relations:      
+    InjertoEvolucion:
+      local: injerto_evolucion_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    ResultadoPbr:
+      local: resultado_pbr_id
+      foreign: id
+      type: one    
+
+#Consultas
+Consulta:
+  tableName: consulta
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(100)
+      notnull: true
+    sentencia:
+      type: string(10000)
+      notnull: true
+
+ConsultaCampo:
+  tableName: consulta_campo
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(45)
+      notnull: true
+    nombre_visible:
+      type: string(45)
+      notnull: true
+    consulta_id:
+      type: integer(4)
+      notnull: true
+    tipo_id:
+      type: integer(4)
+      notnull: false
+  relations:      
+    Consulta:
+      local: consulta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    ConsultaCampoTipo:
+      local: tipo_id
+      foreign: id
+      type: one    
+
+ConsultaCampoTipo:
+  tableName: consulta_campo_tipo
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(45)
+      notnull: true
+    tipo:
+      type: string(45)
+      notnull: true      
+
+Version:
+  tableName: version
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(45)
+      notnull: true

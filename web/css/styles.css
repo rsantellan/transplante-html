@@ -1,0 +1,502 @@
+/* 
+    Document   : styles
+    Created on : 08/06/2011, 04:14:59 PM
+    Author     : Rodrigo Santellan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+body {
+	margin:0;
+	font-family:"Trebuchet MS", Arial, Verdana;
+	font-size:0.74em;
+	color:#555555;
+	background-color:#FFFFFF;
+	text-align:left;
+}
+
+
+
+a {
+	color:#4D87CE;
+	font-weight:bold;
+	text-decoration:none;
+}
+a:hover {
+	color:#2a65ad;
+}
+
+ol,ul {
+
+}
+
+li {
+	list-style-image:url(/images/backgrounds/li.gif);
+	line-height:20px;
+	text-align:left;
+}
+
+.menu {
+	width:100%;
+	padding-top:20px;
+	padding-bottom:20px;
+	background-color:#FFFFFF;
+/*	background-color: #0000CC; */
+	margin-bottom:50px;
+	color:#FFFFFF;
+	text-align:center;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-variant:small-caps;
+	background-image:url(/images/backgrounds/back.png);
+}
+.menu a {
+	color:#FFFFFF;
+	text-decoration:none;
+	padding:10px;
+	padding-top:20px;
+	padding-bottom:20px;
+	
+}
+.menu a:hover {
+	border-bottom:1px solid #ffffff;
+	border-left:1px solid #243482;
+	border-right:1px solid #243482;
+	padding-left:9px;
+	padding-right:9px;
+	color:#000000;
+	background-color:#FFFFFF;
+	background-image:url(/images/backgrounds/hover.jpg);
+}
+
+.header {
+	width:750px;
+	margin:0 auto 0 auto;
+	margin-bottom:40px;
+}
+.header h1 {
+	font-family:"Century Gothic", "Trebuchet MS", "Arial Narrow", Arial, sans-serif;
+	font-size:30px;
+	text-transform:uppercase;
+	font-weight:normal;
+	margin:0;
+	padding:0;
+	padding-top:5px;
+	color:#253183;
+	margin-bottom:10px;
+	text-align:left;
+}
+.header h2 {
+	font-family:"Century Gothic", "Trebuchet MS", "Arial Narrow", Arial, sans-serif;
+	font-size:15px;
+	text-transform:uppercase;
+	text-align:right;
+	font-weight:normal;
+	margin:0;
+	padding:0;
+	color:#000000;
+	border-bottom:1px solid #eeeeee;
+}
+
+.content {
+	width: 90%;
+	margin:0 auto 0 auto;
+	text-align:center;
+}
+
+.introduction {
+	font-family:Helvetica, Arial, sans-serif;
+	line-height:20px;
+	font-size:12px;
+	color:#99B198;
+	text-indent:25px;
+	background-image:url(/images/backgrounds/desc.jpg);
+	background-position:bottom left;
+	padding-left:0;
+	padding-right:200px;
+	padding-bottom:35px;
+	padding-top:0;
+	background-repeat:no-repeat;
+	
+}
+.logo {
+	float:left;
+	margin-right:30px;
+}
+.clearer {
+	clear:both;
+}
+.clear {
+	clear:both;
+}
+/*
+Sidebar no lo puse por ahora
+*/
+#sidebar {
+
+	width:160px;
+	float:right;
+	font-size:95%;
+	color:#253183;
+	text-align:left;
+}
+#sidebar h1 {
+	font-family:"Century Gothic", "Trebuchet MS", "Arial Narrow", Arial, sans-serif;
+	font-size:20px;
+	text-transform:uppercase;
+	font-weight:normal;
+	border-bottom:1px solid #eeeeee;
+	color:#253183;
+	text-align:right;
+}
+.submenu {
+}
+.submenu a {
+	display:block;
+	width:100%;
+	background-image:url(/images/backgrounds/submenua.png);
+	background-position:right;
+	background-repeat:no-repeat;
+	padding:5px;
+	padding-right:0;
+}
+.submenu a:hover {
+	background-color:#eeeeee;
+	background-image:url(/images/backgrounds/submenua_hover.jpg);
+	background-repeat:repeat-y;
+}
+.mainbar {
+	margin-right:185px;
+	padding-right:35px;
+	background-image:url(/images/backgrounds/mainbar.jpg);
+	background-position:top right;
+	background-repeat:no-repeat;
+}
+
+.mainbar h1 {
+	font-family:"Century Gothic", "Trebuchet MS", "Arial Narrow", Arial, sans-serif;
+	font-size:25px;
+	text-transform:uppercase;
+	font-weight:normal;
+	border-bottom:1px solid #eeeeee;
+	color:#253183;
+}
+
+.mainbar p {
+	padding:15px;
+	line-height:20px;
+}
+
+.mainbar .articleimg {
+	float:right;
+	padding:5px;
+	border:1px solid #eeeeee;
+	margin-left:20px;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+.mainbar .articleimg2 {
+
+	padding:5px;
+	border:1px solid #eeeeee;
+	margin-left:20px;
+	margin-top:20px;
+	margin-bottom:25px;
+}
+
+
+
+.footer {
+	width:80%;
+	background-color:#253183;
+	border-top:1px solid #81C0FF;
+	border-bottom:5px solid #253169;
+	padding-top:5px;
+	padding-bottom:5px;
+	color:#FFFFFF;
+}
+.footer a {
+	color:#81C0FF;
+}
+.footer a:hover {
+	color:#AFD7FF;
+}
+
+/** Simple Tip styles **/
+
+.tooltip{ 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  z-index: 3; 
+  display: none; 
+  background-color: #FFFFCC;
+}
+
+.tooltip_text
+{
+  display: none; 
+}
+
+/**  Estilos de los formularios   **/
+.form_container form
+{
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.form_block
+{
+	float: left;
+/*    font-size: 12px;*/
+    margin: 10px 30px 25px 20px;
+}
+
+.form_block h4
+{
+	color: #253183;
+    margin-bottom: 5px;
+}
+
+.form_block_field
+{
+  float: left; 
+  padding: 2px; 
+  margin: 2px;
+}
+
+.error_msg {
+    background-color: red;
+}
+
+.mainbar .paciente_estado_container label
+{
+  font-weight: bold !important;
+}
+
+.mainbar .big_title {
+	border-bottom:1px solid #eeeeee;
+	font-size: 28px;
+    font-weight: bold;
+}
+
+.bold_text
+{
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.small_pre_trasplante
+{
+  width: 60%;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #CACDE1;
+  border: 0.5px solid #253183;  
+  margin-left: 20%;
+  margin-bottom: 2%;
+  text-align: center;  
+}
+
+.pre_trasplante_perdido
+{
+  background-color: #CCCCB2;
+  color: white;
+}
+
+.small_pre_trasplante ul
+{
+  list-style-type: none !important;
+  
+}
+
+.small_pre_trasplante ul li
+{
+  list-style-image: none !important;
+}
+
+.selector_style
+{
+  color: #253183;
+  background-color: #E9EAF3;
+}
+
+.nefropatia_new_form
+{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.nefropatia_new_form .save_button
+{
+  margin-left: 20%;
+  margin-right: 10%;
+}
+
+.nefropatia_delete_error
+{
+  color: red;
+  display: none;
+}
+
+.fancy_manage_container
+{
+  text-align: center;
+}
+
+.fancy_manage_container h1 
+{
+  border-bottom: 1px solid #EEEEEE;
+  color: #253183;
+  font-family: "Century Gothic","Trebuchet MS","Arial Narrow",Arial,sans-serif;
+  font-size: 25px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.serol_container
+{
+  float: left;
+  width: 30%;
+}
+
+.seroles_container label
+{
+  font-size: 2em;
+  font-weight: bold;
+  margin-left: 30%;
+  text-transform:uppercase;
+}
+
+.form_accordion_block
+{
+	float: left;
+/*    font-size: 12px;*/
+    margin: 10px 30px 25px 20px;
+}
+
+.form_accordion_block h4
+{
+	color: #253183;
+  margin-bottom: 5px;
+}
+
+/*
+ Estilos del show de trasplante.
+*/
+
+.trasplante_min_info_basica
+{
+  border-style: dotted;
+  border-width: 1px;
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.trasplante_min_info_basica .slide
+{
+	background: url("/images/btn-slide.gif") no-repeat scroll center top transparent;
+    margin: 0;
+    padding: 0;
+}
+.trasplante_min_info_basica_link
+{
+	background: url("/images/white-arrow.gif") no-repeat scroll right -50px transparent;
+	color: #FFFFFF;
+    display: block;
+    font: bold 120%/100% Arial,Helvetica,sans-serif;
+    height: 31px;
+    margin: 0 auto;
+    padding: 10px 10px 0 0;
+    text-align: center;
+    text-decoration: none;
+    width: 144px;
+}
+
+.trasplante_min_info_basica_link_active {
+    background-position: right 12px;
+}
+.trasplante_info_basica
+{
+  display: none;
+}
+
+.trasplante_info_basica ul.trasplante_info_ul
+{
+  background-color: #D8F0F8;
+  float: left;
+  list-style-type: none !important;
+  border-style: dotted;
+  border-width: 1px;
+  margin-left: 10px;
+}
+
+.trasplante_info_basica ul.trasplante_info_ul li
+{
+  list-style-image: none !important;
+}
+
+.trasplante_fecha_alta_form
+{
+  text-align: center;
+}
+
+.margenes_separadores
+{
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
+.consulta_list_ul li
+{
+  list-style-type: none !important;
+  list-style-image: none !important;
+  border-style: solid;
+  border-width: 1px;
+  margin: 3px;
+  width: 48%;
+  float: left;
+}
+
+.consulta_table_container table
+{
+  width: 95% !important;
+  
+  text-align: center;
+}
+
+.hide{
+  display: none;
+}
+
+.error_list{
+    color: red;
+    font-weight: bolder;
+    font-size: 15px;
+}
+
+/*** Paciente mostrar ***/
+
+div.conteiner_pre_trasplante_opciones
+{
+  min-height: 25px;
+}
+
+div.editar_pre_trasplante
+{
+  float: right;
+  width: 25px;
+  
+}
+
+div.perdida_pre_trasplante
+{
+  float: left;
+  width: 25px;
+}

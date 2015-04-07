@@ -1,0 +1,73 @@
+
+######## DE ACA PARA ABAJO NO SE SI VA
+Datosutiles:
+
+  tableName: datosutiles
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    password:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: pass
+      notnull: true
+      autoincrement: false
+    fecha:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    root:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+  
+FechaControl:
+  tableName: fecha_control
+  columns:
+    id:
+      type: integer(2)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    fecha:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    anos:
+      type: integer(2)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    meses:
+      type: integer(2)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    dias:
+      type: integer(2)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
