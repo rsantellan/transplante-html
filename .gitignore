@@ -1,0 +1,6 @@
+/web/*Plugin
+/cache/*
+/config/databases.yml
+/log/*
+!cache/.gitkeep
+!log/.gitkeep
