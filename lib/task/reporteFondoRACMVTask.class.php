@@ -37,17 +37,17 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
     // add your code here
-    
+var_dump($options);    
     if(is_null($options['yearFrom']) || is_null($options['year']))
     {
-      return;
+//      return;
     }
     
     $yearFrom = (int) $options['yearFrom'];
     $year = (int) $options['year'];
     $completo = (boolean) $options['completo'];
     
-    //var_dump($completo);
+    var_dump($completo);
     //return false;
     
     if($completo)

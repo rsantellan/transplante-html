@@ -264,6 +264,15 @@ class ConsultaTable extends Doctrine_Table
       return $conn->fetchAssoc($sql, $params);
     }
     
+    public function retrieveDiffOfMonthPreTrasplante()
+    {
+      $sql  = "SELECT 12 * ( YEAR( fecha_egreso ) - YEAR( fecha_ingreso_lista ) ) + ( MONTH( fecha_egreso ) - MONTH( fecha_ingreso_lista ) ) AS months, the, meses_en_lista , id ";
+      $sql .= "FROM paciente_pre_trasplante ";
+      $sql .= " ORDER BY the DESC " ;
+      $conn = Doctrine_Manager::getInstance()->getCurrentConnection(); 
+      return $conn->fetchAssoc($sql);
+    }
+    
     public function loadConsultas()
     {
       $sql = "INSERT INTO `consulta` (`id`, `nombre`, `sentencia`) VALUES

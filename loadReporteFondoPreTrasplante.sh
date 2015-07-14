@@ -28,6 +28,12 @@ php symfony loading:reporteFondoRACMV --year="2000" --yearFrom="2000" --trace
 date
 php symfony loading:reporteFondoRACMV --year="2000" --yearFrom="2000" --completo="true" --trace
 date
+php symfony loading:reporteFondoRACMV --year="2001" --yearFrom="2015" --completo="true" --trace
+date
+php symfony loading:reporteFondoRACMV --year="2001" --yearFrom="2014" --completo="true" --trace
+date
+php symfony loading:reporteFondoRACMV --year="2001" --yearFrom="2013" --completo="true" --trace
+date
 php symfony loading:reporteFondoRACMV --year="2001" --yearFrom="2012" --completo="true" --trace
 date
 php symfony loading:reporteFondoRACMV --year="2002" --yearFrom="2011" --completo="true" --trace

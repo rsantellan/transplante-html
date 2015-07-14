@@ -83,4 +83,13 @@ class PacientepretrasplanteTable extends Doctrine_Table
         ->where('pp.id = ?', $preTrasplanteId)
         ->execute();
     }
+    
+    public function updatePreTrasplanteMesesLista($preTrasplanteId, $months)
+    {
+      return Doctrine_Query::create()
+        ->update('Pacientepretrasplante pp')
+        ->set('pp.fecha_egreso', '?', $months)
+        ->where('pp.id = ?', $preTrasplanteId)
+        ->execute();
+    }
 }
